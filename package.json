@@ -19,6 +19,8 @@
         "koa-send": "3.3.0",
         "koa-logger":"2.0.1 ",
         "sequelize": "3.24.1",
-        "mysql": "2.11.1"
+        "mysql": "2.11.1",
+        "koa-body":"2.0.1",
+        "co-body":"5.1.1"
     }
 }

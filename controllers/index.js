@@ -22,7 +22,7 @@ module.exports = {
         var password = ctx.request.body["password"];
         var username = ctx.request.body["username"];
         //var userdata = userData("1");
-       if(username == usr[0]["name"]&&password == usr[0]["password"]){
+        if (username == usr[0]["name"] && password == usr[0]["password"]) {
             ctx.session.isLogin = true;
             console.log(ctx.session)
             ctx.redirect('/file.html');

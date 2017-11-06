@@ -6,7 +6,7 @@
 
     html,
     body {
-        background: #f9f9f9;
+        background: #ddf0ed;
         height: 100%;
         overflow: hidden;
     }
@@ -14,10 +14,8 @@
     .header {
         width: 100%;
         height: 100px;
-        background: #88DEB3;
         position: fixed;
         top: 0;
-        border-bottom: 5px solid #81B570;
         z-index: 2;
     }
 
@@ -28,7 +26,7 @@
         font-weight: 900;
         text-shadow: 0 10px 13px rgba(136, 136, 136, 0.5);
         height: 100%;
-        margin-left: 300px;
+        margin-left: 40px;
         float: left;
         line-height: 100px;
         overflow: hidden;
@@ -55,23 +53,25 @@
     }
 
     .side {
-        background: #ccc;
-        width: 300px;
+        margin-top: 60px;
+        width: 10%;
         height: 100%;
         position: fixed;
+        min-width: 200px;
         top: 0;
     }
 
     .item {
         margin-top: 105px;
+        
     }
 
+    
     .item li {
         font-size: 1.2em;
         list-style: none;
         height: 50px;
         line-height: 50px;
-        text-align: center;
         -webkit-transition: all .2s ease-in-out;
         transition: all .2s ease-in-out;
         display: block;
@@ -125,28 +125,74 @@
         transition: all .2s ease-in-out;
     }
 
+    .item img {
+        height: 24px;
+        width: 24px;
+        margin-left: 40px;
+        margin-right: 5px;
+    }
     .content_warp {
-        margin: 130px 30px 30px 330px;
+        background-color: #ffffff;
+        margin: 110px 30px 30px 220px;
+        padding:20px;
         box-sizing: border-box;
         border: 5px solid #99BDFF;
         border-radius: 10px;
         box-shadow: 0 0 10px;
         height: calc(100% - 160px);
         min-height: calc(100% - 560px);
+                overflow: auto;
     }
 
+
+
+    .content_warp button {
+        background: cornflowerblue;
+        display: inline-block;
+        margin-right: 20px;
+        margin-bottom: 15px;
+        padding: 5px 10px 6px;
+        color: #fff;
+        border-radius: 7px;
+        position: relative;
+        cursor: pointer
+    }
+
+    .content_warp img {
+        height: 20px;
+        width:20px;
+        margin-right: 5px;
+    }
+
+    .content_warp img:hover {
+        -webkit-filter:brightness(.5);
+        }
     .content {
         border-radius: 10px;
         background: inherit;
         display: none;
     }
+    #file-list p{
+        margin: 0 auto;
 
+    }
+    .check img{
+        border: 2px solid #99BDFF;
+        border-radius: 1px;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
     .show {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
     }
 
+    .clicked {
+        color: cornflowerblue;
+        border-radius: 10px;
+        background-color: gainsboro;
+    }
     img {
         width: 60%;
         height: 50%;
@@ -167,7 +213,7 @@
         height: 30px;
         color: #fff;
     }
-
+    
     input[type="file" i]::-webkit-file-upload-button {
         height: 30px;
         outline: none;

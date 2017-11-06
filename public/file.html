@@ -2,59 +2,94 @@
 
 <head>
     <meta charset="UTF-8">
+    <script src="script/vue.js"></script>
+
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="script/index.js"></script>
     <title>后台页面</title>
     <link type="text/css" rel="stylesheet" href="style/index.css">
-    <script src="script/index.js">
-    </script>
-    <script type="text/javascript">
-    </script>
 </head>
 
 <body>
     <div class="header">
-        <div class="title">广告机の后台管理</div>
+        <div class="title"><span onclick="location.reload()">广告机の后台管理</span></div>
+        <div class="progress" style="width: 40%;margin:40px 100px 0px 200px;display:none">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                <span class="sr-only">40% 完成</span>
+            </div>
+        </div>
     </div>
     <div class="side">
         <ul class="item" id="item_li">
-            <li>upload</li>
-            <li>delete</li>
+            <li name="near" class='clicked'><img src="images/near.ico">近期活动</li>
+            <li name="open"><img src="images/open.ico">开源项目</li>
+            <li name="video"><img src="images/video.ico">轮播资源</li>
+            <li name="works"><img src="images/works.ico">作品</li>
+            <li name="mynewapp"><img src="images/mynewapp.ico">新版本</li>
+            <li name="music"><img src="images/music.ico">音乐</li>
+            <li name="myskin"><img src="images/skin.ico">皮肤</li>
+            <li name="picture"><img src="images/picture.ico">图片</li>
+            <li name="ppt"><img src="images/ppt.ico">ppt</li>
+            <li name="setting"><img src="images/setting.ico">设置</li>
+            <li name="word"><img src="images/word.ico">名言</li>
         </ul>
     </div>
+    <form multiple="multiple" enctype="multipart/form-data" method="post" name="fileinfo" style="display:none">
+        <input type="file" name="file" id="load_xls" onchange="uploadFile()" multiple>
+        <input type="text" id="spath" name='path'>
+    </form>
     <div class="content_warp" id="content_item">
-        <div class="content show" align='center'>
-            <form method="POST" action="/upload" id='actform' enctype="multipart/form-data">
-                <select name="actlist" form="actform">
-                    <option value="near">Near</option>
-                    <option value="open">Open</option>
-                    <option value="play">Play</option>
-                    <option value="works">Wroks</option>
-                </select>
-                <input type="text" name="dirname" value='2000.0.0'>
-                <input type="file" name="file" onchange="imgPreview(this)" multiple>
-                <input type="submit" value="OK" class="btn btn-primary btn-sm">
-            </form>
-            <img id="preview" />
-            <iframe name=myiframe style="display: none;"></iframe>
-        </div>
-        <div class="content" align='center'>
-            <button class="btn btn-primary btn-sm" id="btn1"> 获取当前存在的文件 </button>
-            <form method="POST" action="/delete" id='delform'>
-                <select name="dellist" id="list1" form="delform" onchange="change()">
-                </select>
-                <select name="deldir" id="list2" form="delform" onchange="delPreview()">
-                </select>
-                <input type="submit" value="OK" class="btn btn-primary btn-sm">
-            </form>
-            <img id="preview1" />
-            <iframe name=myiframe style="display: none;"></iframe>
-        </div>
-    </div>
-    <div class="content_warp1" display:inline id="ss">
+        <button id='load'><img src="images/upload.ico" >上传文件</button>
+        <button id='updir'><img src="images/up-folder.ico" >上传文件夹</button>
+        <button id='mkdir'> <img src="images/new-folder.ico">新建文件夹</button>
+        <button id='back'> <img src="images/return.ico">返回上一层</button>
+        <p id="constPath" v-text="str+path"></p>
+        <table id="file-list" class="table table-hover" frame=hsides>
+            <thead>
+                <tr>
+                    <th width='60%'>文件名</th>
+                    <th width='20%'>大小</th>
+                    <th width='20%'>修改日期</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="mkdir_tr" style='display:none'>
+                    <td>
+                        <p><img class="media-object" style="width:25px; height:25px;" src="images/folder.ico">
+                            <input id='dirname' type="text">
+                            <span class="check">
+                            <img id='yes' src="images/yes.ico">
+                            <img id='close' src="images/close.ico"> </span>
+                        </p>
+                    </td>
+                    <td>
+                        <p>-----</p>
+                    </td>
+                    <td>
+                        <p>-----</p>
+                    </td>
+                </tr>
+                <tr v-for="f in files">
+                    <td>
+                        <p><img class="media-object" style="width:25px; height:25px;" src="images/folder.ico">
+                            <a v-on:click="inFolder(f.name)"><span v-text="f.name"></span></a>
+                            <a v-on:click="deleteFile(f.name)"><img src="images/delete.ico" ></a>
+                        </p>
+                    </td>
+                    <td>
+                        <p v-text="f.size"></p>
+                    </td>
+                    <td>
+                        <p v-text="f.time"></p>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
     </div>
 </body>
 

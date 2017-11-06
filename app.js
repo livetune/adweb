@@ -10,23 +10,22 @@ const bodyParser = require('koa-bodyparser');
 const config = require('./config')
 const session = require('koa-session');
 const convert = require('koa-convert');
-
+const koaBody = require('koa-body');
 const controller = require('./controller');
 
-app.use(bodyParser());
-app.use(controller());
-app.use(router.routes())
-    .use(router.allowedMethods());
+
 
 // session存储配置
 // 配置session中间件
+app.use(bodyParser());
 app.use(convert(session(app)));
 //app.use(logger());
 app.keys = ['some secret hurr'];
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // console.log(req.body['actlist'])
-        var dir = 'uploads/' + req.body['actlist'] + '/' + req.body['dirname'];
+        console.log(req.body);
+        // console.log("-0----------")
+        var dir = 'uploads'+req.body['path'];
         if (!fs.existsSync(dir))
             fs.mkdirSync(dir)
         cb(null, dir);    // 保存的路径，备注：需要自己创建
@@ -53,19 +52,32 @@ app.use(async function (ctx, next) {
         console.log(ctx.path)
         await send(ctx, ctx.path.replace('download', 'uploads'));
     }
+<<<<<<< HEAD
+    
+=======
+    ctx.onerror=ctx.onerror.bind(onerr);
+>>>>>>> ab68853c610b0ec75bc24003de4c5c1dd7e51b63
 })
 
+function onerr(err){
+    console.log("it error;")
+}
 
-app.use(convert(serve(path.join(__dirname, '/public'))));
+var setpath = "";
 
-
-router.post('/upload', upload.array('file'), function (ctx, next) {
+router.post('/upload', upload.array('file'),async function (ctx, next) {
     //ctx.body = ctx.request.body['a'];
-    //console.log (ctx.request.body['actlist']+ctx.request.body['dirname']);
     ctx.body = "upload is success";
-
-    ctx.redirect('/file.html');
+    await next();
+    //ctx.redirect('/file.html');
 });
 
+
+//app.use(koaBody({ multipart: true }));
+
+app.use(controller());
+app.use(router.routes())
+    .use(router.allowedMethods());
+app.use(convert(serve(path.join(__dirname, '/public'))));
 app.listen(57451);
 console.log('listening on port 57451');

@@ -10,7 +10,7 @@ const config = {
     PORT: '3306',
     HOST: 'localhost'
   },
-  serverroot:"localhost:57451"
+  serverroot:"192.168.3.35:57451"
 }
 
 module.exports = config
